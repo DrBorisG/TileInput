@@ -33,7 +33,7 @@ public:			//everything is public, this class is for cleaner code and convenience
 	void populateMap(uint16_t inNum, uint16_t inX, uint16_t inY)
 	{
 		//declarations
-		char fileName[21]; //map####.csv
+		char fileName[24]; //map####.csv
 		FILE * mapFile; //only used for doing the intial dump to arrays, but has to be here and 'cheap' to hold on to really.
 		char * buffer; //buffer in lines from the map csv file.
 		char * tokbuffer; //a pointer for tokenizing the map buffer
@@ -48,8 +48,8 @@ public:			//everything is public, this class is for cleaner code and convenience
 		y = inY; //in an ideal world we could somehow unpack map x and y from mapnum too, rather than passing from main loop, but I'll figure that out later once I have it working.
 		uint16_t holder = ((x * 4)+3); //assumeing the max case of 4 character per map tile.
 		buffer = (char*) malloc(holder); //if I did this right, should be change buffer to be a pointer pointing at holder #bytes of memory.
-		holder = x * y ; //map width * height
-		visArray = (uint16_t*) malloc(holder); //does malloc correctly cast to uint16? If not I can always add a *2 to that holder assignment above
+		holder = x * y * 2 ; //map width * height * 2 because we need to malloc for short ints (2 byetes) and malloc does bytes.
+		visArray = (uint16_t*) malloc(holder); 
 		behArray = (uint16_t*) malloc(holder);
 		bakArray = (uint16_t*) malloc(holder);
 		forArray = (uint16_t*) malloc(holder);
