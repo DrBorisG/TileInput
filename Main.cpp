@@ -46,7 +46,7 @@ public:			//everything is public, this class is for cleaner code and convenience
 		mapNum = inNum; //computationally cheap to make sure this number just sticks with the instance of the class from now on.
 		x = inX; //I can see needing to know the map size a lot, letting the class hold it is process-cheap and useful for me as the programmer.
 		y = inY; //in an ideal world we could somehow unpack map x and y from mapnum too, rather than passing from main loop, but I'll figure that out later once I have it working.
-		uint16_t holder = x * 4; //assumeing the max case of 4 character per map tile.
+		uint16_t holder = ((x * 4)+3); //assumeing the max case of 4 character per map tile.
 		buffer = (char*) malloc(holder); //if I did this right, should be change buffer to be a pointer pointing at holder #bytes of memory.
 		holder = x * y ; //map width * height
 		visArray = (uint16_t*) malloc(holder); //does malloc correctly cast to uint16? If not I can always add a *2 to that holder assignment above
@@ -59,7 +59,7 @@ public:			//everything is public, this class is for cleaner code and convenience
 		
 		while (yCurrent < y) //until we get through building the visible layer array, basically
 		{
-			fgets(buffer, x*4, mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
+			fgets(buffer, ((x * 4) + 3), mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
 			tokbuffer = strtok(buffer, ","); //break the buffer down by commas
 			while (xCurrent < x) //while on a row
 			{
@@ -74,7 +74,7 @@ public:			//everything is public, this class is for cleaner code and convenience
 
 		while (yCurrent < y*2) //building the behavior array
 		{
-			fgets(buffer, x * 4, mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
+			fgets(buffer, ((x * 4) + 3), mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
 			tokbuffer = strtok(buffer, ","); //break the buffer down by commas
 			while (xCurrent < x) //while on a row
 			{
@@ -89,7 +89,7 @@ public:			//everything is public, this class is for cleaner code and convenience
 
 		while (yCurrent < y*3) //background
 		{
-			fgets(buffer, x * 4, mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
+			fgets(buffer, ((x * 4) + 3), mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
 			tokbuffer = strtok(buffer, ","); //break the buffer down by commas
 			while (xCurrent < x) //while on a row
 			{
@@ -104,7 +104,7 @@ public:			//everything is public, this class is for cleaner code and convenience
 
 		while (yCurrent < y*4) //foreground overlay
 		{
-			fgets(buffer, x * 4, mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
+			fgets(buffer, ((x * 4) + 3), mapFile); //buffer should be a string of format: ###,###,###,...,###\n     //note that this includes the possibility that it's #,#,#,...,#\n
 			tokbuffer = strtok(buffer, ","); //break the buffer down by commas
 			while (xCurrent < x) //while on a row
 			{
